@@ -42,8 +42,8 @@ for line in range(len(lines)):
 
     copies = []
     for n in range(copycount):
-        if line + n < len(lines) + 1:
-            copies.append(line + n)
+        if line + n + 1 < len(lines) + 1:
+            copies.append(line + n + 1)
 
     card["copies"] = copies
     cards.append(card)
@@ -68,13 +68,11 @@ print(cards)
 for card in range(len(cards)):
     t.sleep(0.0001)
     print("card:", cards[card], "iterating:", seencards[card])
-    for i in range(seencards[card]):
-        print("iteration", i)
-        t.sleep(0.0001)
-        for c in cards[card]["copies"]:
-            t.sleep(0.0001)
-            print("incrementing:", c)
-            seencards[c] += 1
+    for c in cards[card]["copies"]:
+        seencards[c] += seencards[card]
+#    for i in range(seencards[card]):
+#        for c in cards[card]["copies"]:
+#            seencards[c] += 1
 
 sum = 0
 for n in seencards:
