@@ -7,7 +7,7 @@ types = [
         "water-to-light",
         "light-to-temperature",
         "temperature-to-humidity",
-         "humidity-to-location"
+        "humidity-to-location"
         ]
 
 seeds = []
@@ -36,7 +36,7 @@ def arr2int(arr):
         try:
             newlist.append(int(item.strip()))
         except ValueError:
-            print("Error when converting", item, "------")
+            print("Error when converting", item, "------", "from array [", arr, "]")
 
     return newlist
 
@@ -46,13 +46,6 @@ type = ""
 
 def checklinestart(line):
     return "map" in line
-    split = line.split(" ")
-    for s in split:
-        print("--", s, "--")
-        if split in types:
-            print("found!")
-            return True
-    return False
 
 
 for line in f.readlines():
@@ -65,7 +58,7 @@ for line in f.readlines():
         type = line.split(" ")[0]
     else:
         nums = arr2int(line.split(" "))
-        print("appending to", type, ":", nums)
+        # print("appending to", type, ":", nums)
         match type:
             case "seed-to-soil":
                 s2s.append(nums)
@@ -86,22 +79,11 @@ for line in f.readlines():
 def cmv(value, map):
     for vals in map:
         if value >= vals[1] and value < vals[1] + vals[2]:
-            print("found match for ", value, ":", vals[0] + (value - vals[1]))
+            # print("found match for ", value, ":", vals[0] + (value - vals[1]))
             return vals[0] + (value - vals[1])
         else:
             continue
-    print("no match found, returning", value)
-    return value
-
-
-# reverse of above function
-def r_cmv(value, map):
-    for vals in map:
-        if value >= vals[0] and value < vals[0] + vals[2]:
-            #print("found", value, "in range. Mapped to", vals[1])
-            return value - vals[0]
-        else:
-            continue
+    # print("no match found, returning", value)
     return value
 
 
@@ -109,15 +91,6 @@ for seed in seeds:
     print("Checking seed:", seed)
     locations.append(cmv(cmv(cmv(cmv(cmv(cmv(cmv(seed, s2s), s2f), f2w), w2l), l2t), t2h), h2l))
 
-"""
-for l in h2l:
-    print("handling", l)
-    for i in range(l[0], l[0] + l[2] + 1):
-        seed = r_cmv(r_cmv(r_cmv(r_cmv(r_cmv(r_cmv(r_cmv(i, h2l), t2h), l2t), w2l), f2w), s2f), s2s)
-        if seed in seeds:
-            locations.append(i)
-            print("match!")
-"""
 print(locations)
 
 locations.sort()
