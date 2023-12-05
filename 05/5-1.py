@@ -1,4 +1,4 @@
-f = open("./input")
+f = open("./demoinput")
 
 types = [
         "seed-to-soil",
@@ -94,10 +94,30 @@ def cmv(value, map):
     return value
 
 
+# reverse of above function
+def r_cmv(value, map):
+    for vals in map:
+        if value >= vals[0] and value < vals[0] + vals[2]:
+            #print("found", value, "in range. Mapped to", vals[1])
+            return value - vals[0]
+        else:
+            continue
+    return value
+
+
 for seed in seeds:
     print("Checking seed:", seed)
     locations.append(cmv(cmv(cmv(cmv(cmv(cmv(cmv(seed, s2s), s2f), f2w), w2l), l2t), t2h), h2l))
 
+"""
+for l in h2l:
+    print("handling", l)
+    for i in range(l[0], l[0] + l[2] + 1):
+        seed = r_cmv(r_cmv(r_cmv(r_cmv(r_cmv(r_cmv(r_cmv(i, h2l), t2h), l2t), w2l), f2w), s2f), s2s)
+        if seed in seeds:
+            locations.append(i)
+            print("match!")
+"""
 print(locations)
 
 locations.sort()
