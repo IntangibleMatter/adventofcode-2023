@@ -1,4 +1,4 @@
-f = open("./demoinput")
+f = open("./input")
 
 types = [
         "seed-to-soil",
@@ -93,5 +93,6 @@ for seed in seeds:
 
 print(locations)
 
-locations.sort()
+locations = locations.sort()
+
 print(locations)
